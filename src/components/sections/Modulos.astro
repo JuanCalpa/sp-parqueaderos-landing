@@ -86,7 +86,7 @@ const toneStyles: Record<Tone, string> = {
 <section id="modulos" class="bg-[#fafafb] py-20 text-slate-900 sm:py-24">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <!-- Encabezado -->
-    <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
+    <div class="modulos-header flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
       <div>
         <p class="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-red-700">
           <span class="h-0.5 w-3 bg-red-700" aria-hidden="true"></span>
@@ -103,9 +103,9 @@ const toneStyles: Record<Tone, string> = {
     </div>
 
     <!-- Tarjetas -->
-    <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <ul class="modulos-grid mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {modulos.map((m) => (
-        <li class="flex flex-col rounded-lg bg-white p-4 shadow-sm ring-1 ring-slate-200/60 transition-shadow duration-200 hover:shadow-md">
+        <li class="modulo-card flex flex-col rounded-lg bg-white p-4 shadow-sm ring-1 ring-slate-200/60 transition-shadow duration-200 hover:shadow-md">
           <span class="flex h-12 w-12 items-center justify-center rounded-md bg-indigo-50">
             <svg class:list={['h-6 w-6', m.iconColor]} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={m.icon} />
           </span>
@@ -120,3 +120,49 @@ const toneStyles: Record<Tone, string> = {
     </ul>
   </div>
 </section>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!prefersReducedMotion) {
+    gsap.fromTo(
+      '#modulos .modulos-header > *',
+      { y: 24, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.6,
+        stagger: 0.12,
+        ease: 'power3.out',
+        clearProps: 'all',
+        scrollTrigger: {
+          trigger: '#modulos',
+          start: 'top 90%',
+          once: true,
+        },
+      }
+    );
+
+    gsap.fromTo(
+      '#modulos .modulo-card',
+      { y: 32, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.65,
+        stagger: 0.1,
+        ease: 'power3.out',
+        clearProps: 'all',
+        scrollTrigger: {
+          trigger: '#modulos .modulos-grid',
+          start: 'top 88%',
+          once: true,
+        },
+      }
+    );
+  }
+</script>

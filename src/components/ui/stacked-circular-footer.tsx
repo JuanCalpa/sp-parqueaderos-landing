@@ -135,10 +135,10 @@ function StackedCircularFooter() {
               <a href="#inicio" className="transition-colors hover:text-[#B80D14] cursor-pointer">
                 Inicio
               </a>
-              <a href="#servicios" className="transition-colors hover:text-[#B80D14] cursor-pointer">
+              <a href="#modulos" className="transition-colors hover:text-[#B80D14] cursor-pointer">
                 Módulos
               </a>
-              <a href="#beneficios" className="transition-colors hover:text-[#B80D14] cursor-pointer">
+              <a href="#solucion" className="transition-colors hover:text-[#B80D14] cursor-pointer">
                 Solución Web & Móvil
               </a>
               <a href="#whatsapp-pos" className="transition-colors hover:text-[#B80D14] cursor-pointer">

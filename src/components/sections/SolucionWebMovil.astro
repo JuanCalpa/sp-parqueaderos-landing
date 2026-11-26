@@ -56,7 +56,7 @@ const roles = [
 <!-- Arquitectura omnicanal: cabina + móvil -->
 <section id="solucion" class="bg-[#f5f5fa] py-16 text-slate-900 sm:py-20">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="mx-auto max-w-3xl text-center">
+    <div class="solucion-header mx-auto max-w-3xl text-center">
       <p class="text-[11px] font-semibold uppercase tracking-wider text-red-700">Arquitectura omnicanal</p>
       <h2 class="font-display mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-[34px] sm:leading-tight">
         Diseñado para la velocidad en cabina y el control en movimiento
@@ -67,9 +67,9 @@ const roles = [
       </p>
     </div>
 
-    <div class="mt-12 grid items-center gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-10">
+    <div class="solucion-grid mt-12 grid items-center gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-10">
       <!-- Terminal de cabina -->
-      <div>
+      <div class="solucion-terminal">
         <div class="overflow-hidden rounded-xl bg-slate-800 p-1 shadow-2xl shadow-slate-900/20">
           <div class="relative flex items-center px-3 py-2">
             <div class="flex gap-1.5" aria-hidden="true">
@@ -101,7 +101,7 @@ const roles = [
       </div>
 
       <!-- Celulares -->
-      <div>
+      <div class="solucion-phones">
         <div class="flex items-start justify-center gap-4 sm:gap-5">
           <div class="w-1/2 max-w-[230px]">
             <p class="mb-2 text-center text-[11px] font-semibold uppercase tracking-wider text-red-700">Paso 1: Entrada</p>
@@ -136,7 +136,7 @@ const roles = [
 <!-- Seguridad multi-inquilino y roles -->
 <section id="seguridad" class="bg-white py-16 text-slate-900 sm:py-20">
   <div class="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_1.4fr] lg:px-8">
-    <div>
+    <div class="seguridad-info">
       <p class="inline-flex items-center gap-1.5 rounded bg-indigo-50 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-red-700">
         <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z" /><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2" /><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2" /><path d="M10 6h4" /><path d="M10 10h4" /><path d="M10 14h4" /><path d="M10 18h4" /></svg>
         Aislamiento criptográfico
@@ -159,9 +159,9 @@ const roles = [
       </ul>
     </div>
 
-    <ul class="grid gap-3 sm:grid-cols-3">
+    <ul class="seguridad-roles grid gap-3 sm:grid-cols-3">
       {roles.map((r) => (
-        <li class:list={['flex flex-col rounded-lg border-t-4 bg-white p-4 shadow-sm ring-1 ring-slate-200/70', r.border]}>
+        <li class:list={['seguridad-role-card flex flex-col rounded-lg border-t-4 bg-white p-4 shadow-sm ring-1 ring-slate-200/70', r.border]}>
           <div class="flex items-center justify-between">
             <span class:list={['flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold', r.badge]}>{r.n}</span>
             <span class:list={['font-mono text-[11px] font-semibold', r.accent]}>{r.code}</span>
@@ -174,3 +174,102 @@ const roles = [
     </ul>
   </div>
 </section>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!prefersReducedMotion) {
+    gsap.fromTo(
+      '#solucion .solucion-header > *',
+      { y: 24, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: 'power3.out',
+        clearProps: 'all',
+        scrollTrigger: {
+          trigger: '#solucion',
+          start: 'top 90%',
+          once: true,
+        },
+      }
+    );
+
+    gsap.fromTo(
+      '#solucion .solucion-terminal',
+      { x: -32, opacity: 0 },
+      {
+        x: 0,
+        opacity: 1,
+        duration: 0.7,
+        ease: 'power3.out',
+        clearProps: 'all',
+        scrollTrigger: {
+          trigger: '#solucion .solucion-grid',
+          start: 'top 86%',
+          once: true,
+        },
+      }
+    );
+
+    gsap.fromTo(
+      '#solucion .solucion-phones',
+      { x: 32, opacity: 0 },
+      {
+        x: 0,
+        opacity: 1,
+        duration: 0.7,
+        delay: 0.15,
+        ease: 'power3.out',
+        clearProps: 'all',
+        scrollTrigger: {
+          trigger: '#solucion .solucion-grid',
+          start: 'top 86%',
+          once: true,
+        },
+      }
+    );
+
+    gsap.fromTo(
+      '#seguridad .seguridad-info > *',
+      { y: 20, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.6,
+        stagger: 0.08,
+        ease: 'power3.out',
+        clearProps: 'all',
+        scrollTrigger: {
+          trigger: '#seguridad',
+          start: 'top 90%',
+          once: true,
+        },
+      }
+    );
+
+    gsap.fromTo(
+      '#seguridad .seguridad-role-card',
+      { y: 30, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.65,
+        stagger: 0.14,
+        ease: 'power3.out',
+        clearProps: 'all',
+        scrollTrigger: {
+          trigger: '#seguridad .seguridad-roles',
+          start: 'top 88%',
+          once: true,
+        },
+      }
+    );
+  }
+</script>
