@@ -188,23 +188,23 @@ export default function PricingBlock() {
     <section
       ref={sectionRef}
       id="tarifas"
-      className="flex w-full items-center justify-center bg-[#F8FAFC] px-4 py-20 text-slate-900 sm:px-6 lg:px-8"
+      className="flex w-full items-center justify-center bg-[#fafafb] px-4 py-16 text-slate-900 sm:px-6 sm:py-20 lg:px-8 border-t border-slate-200/70"
     >
       <div className="mx-auto w-full max-w-6xl">
-        <div className="pricing-header mx-auto max-w-2xl text-center">
-          <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#B80D14]">
-            TARIFAS TRANSPARENTES
+        <div className="pricing-header mx-auto max-w-3xl text-center">
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-red-700">
+            Tarifas transparentes
           </p>
-          <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+          <h2 className="font-display mt-2 text-2xl font-bold tracking-tight text-slate-900 sm:text-[34px] sm:leading-tight">
             Elige el plan ideal para tu parqueadero
           </h2>
-          <p className="mt-3 text-base text-[#6B5B57]">
+          <p className="mx-auto mt-3 max-w-2xl text-[15px] leading-relaxed text-slate-600">
             Sin cláusulas de permanencia. Configuración en la nube lista para
             operar en minutos.
           </p>
         </div>
 
-        <div className="pricing-grid mt-14 grid grid-cols-1 gap-8 md:grid-cols-3 items-stretch">
+        <div className="pricing-grid mt-10 sm:mt-14 grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-3 items-stretch">
           {tiers.map((tier) => {
             const price = tier.monthly;
             const waUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
@@ -217,87 +217,87 @@ export default function PricingBlock() {
                   className={cn(
                     "relative flex w-full flex-col justify-between transition-shadow duration-200 hover:shadow-lg",
                     tier.featured
-                      ? "border-2 border-[#B80D14] shadow-xl shadow-[#B80D14]/10"
+                      ? "border-2 border-red-700 shadow-xl shadow-red-700/10"
                       : "border border-slate-200/90 shadow-sm",
                   )}
                 >
                   {tier.featured && (
                     <div className="popular-badge absolute -top-3.5 left-1/2 -translate-x-1/2">
-                    <Badge className="bg-[#B80D14] px-4 py-1 text-[11px] font-extrabold uppercase tracking-wider text-white shadow-sm hover:bg-[#B80D14]">
-                      MÁS POPULAR
-                    </Badge>
-                  </div>
-                )}
+                      <Badge className="font-display bg-red-700 px-4 py-1 text-[11px] font-semibold uppercase tracking-wider text-white shadow-sm hover:bg-red-700">
+                        MÁS POPULAR
+                      </Badge>
+                    </div>
+                  )}
 
-                <CardHeader className="pb-4">
-                  <p
-                    className={cn(
-                      "text-[11px] font-bold uppercase tracking-[0.14em]",
-                      tier.featured ? "text-[#B80D14]" : "text-slate-500",
-                    )}
-                  >
-                    {tier.category}
-                  </p>
-                  <CardTitle className="mt-1 text-2xl font-extrabold text-slate-900">
-                    {tier.name}
-                  </CardTitle>
-                  <CardDescription className="mt-2 text-xs leading-relaxed text-[#6B5B57] sm:min-h-10">
-                    {tier.description}
-                  </CardDescription>
-                </CardHeader>
-
-                <CardContent className="flex flex-1 flex-col gap-6">
-                  <div>
-                    <p className="flex items-baseline gap-1.5">
-                      <span
-                        className={cn(
-                          "text-4xl font-extrabold tracking-tight tabular-nums",
-                          tier.featured ? "text-[#B80D14]" : "text-slate-900",
-                        )}
-                      >
-                        ${price}
-                      </span>
-                      <span className="text-xs font-medium text-slate-500">
-                        / mes COP
-                      </span>
+                  <CardHeader className="pb-4">
+                    <p
+                      className={cn(
+                        "text-[11px] font-semibold uppercase tracking-wider",
+                        tier.featured ? "text-red-700" : "text-slate-500",
+                      )}
+                    >
+                      {tier.category}
                     </p>
-                  </div>
+                    <CardTitle className="font-display mt-1 text-xl sm:text-2xl font-bold text-slate-900">
+                      {tier.name}
+                    </CardTitle>
+                    <CardDescription className="mt-2 text-[13px] leading-relaxed text-slate-600 sm:min-h-10">
+                      {tier.description}
+                    </CardDescription>
+                  </CardHeader>
 
-                  <ul className="flex flex-1 flex-col gap-3 text-xs sm:text-sm text-slate-700">
-                    {tier.features.map((feature) => (
-                      <li
-                        key={feature.text}
-                        className="flex items-start gap-2.5"
-                      >
-                        <IconPlaceholder
-                          lucide="Check"
-                          tabler="IconCheck"
-                          hugeicons="Tick02Icon"
-                          phosphor="Check"
-                          remixicon="RiCheckLine"
-                          className="mt-0.5 size-4 shrink-0 text-emerald-600 stroke-[2.5]"
-                          aria-hidden="true"
-                        />
+                  <CardContent className="flex flex-1 flex-col gap-6">
+                    <div>
+                      <p className="flex items-baseline gap-1.5">
                         <span
                           className={cn(
-                            feature.bold
-                              ? "font-bold text-slate-900"
-                              : "text-slate-600",
+                            "font-display text-3xl sm:text-4xl font-bold tracking-tight tabular-nums",
+                            tier.featured ? "text-red-700" : "text-slate-900",
                           )}
                         >
-                          {feature.text}
+                          ${price}
                         </span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
+                        <span className="text-xs font-medium text-slate-500">
+                          / mes COP
+                        </span>
+                      </p>
+                    </div>
+
+                    <ul className="flex flex-1 flex-col gap-3 text-[13px] sm:text-sm text-slate-700">
+                      {tier.features.map((feature) => (
+                        <li
+                          key={feature.text}
+                          className="flex items-start gap-2.5"
+                        >
+                          <IconPlaceholder
+                            lucide="Check"
+                            tabler="IconCheck"
+                            hugeicons="Tick02Icon"
+                            phosphor="Check"
+                            remixicon="RiCheckLine"
+                            className="mt-0.5 size-4 shrink-0 text-emerald-700 stroke-[2.5]"
+                            aria-hidden="true"
+                          />
+                          <span
+                            className={cn(
+                              feature.bold
+                                ? "font-semibold text-slate-900"
+                                : "text-slate-600",
+                            )}
+                          >
+                            {feature.text}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
 
                   <CardFooter className="pt-4">
                     <Button
                       nativeButton={false}
                       variant={tier.featured ? "default" : "outline"}
                       size="lg"
-                      className="w-full"
+                      className="font-display w-full font-semibold"
                       render={
                         <a
                           href={waUrl}
