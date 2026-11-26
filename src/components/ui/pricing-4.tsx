@@ -1,7 +1,9 @@
 "use client";
 
 import type { ComponentType, SVGProps } from "react";
-import { useState } from "react";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import * as LucideIcons from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/pricing-4-utils/button";
@@ -112,15 +114,84 @@ const tiers: Tier[] = [
 ];
 
 export default function PricingBlock() {
+  const sectionRef = useRef<HTMLElement>(null);
   const whatsappNumber = siteConfig.phone.replace(/[^0-9]/g, "");
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".pricing-header > *",
+        { y: 20, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.55,
+          stagger: 0.1,
+          ease: "power3.out",
+          clearProps: "all",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 95%",
+            once: true,
+          },
+        },
+      );
+
+      gsap.fromTo(
+        ".pricing-card",
+        { y: 32, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.65,
+          stagger: 0.14,
+          ease: "power3.out",
+          clearProps: "all",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 92%",
+            once: true,
+          },
+        },
+      );
+
+      gsap.fromTo(
+        ".popular-badge",
+        { scale: 0.75, opacity: 0 },
+        {
+          scale: 1,
+          opacity: 1,
+          duration: 0.5,
+          delay: 0.25,
+          ease: "back.out(2)",
+          clearProps: "all",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 92%",
+            once: true,
+          },
+        },
+      );
+
+      ScrollTrigger.refresh();
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section
+      ref={sectionRef}
       id="tarifas"
       className="flex w-full items-center justify-center bg-[#F8FAFC] px-4 py-20 text-slate-900 sm:px-6 lg:px-8"
     >
       <div className="mx-auto w-full max-w-6xl">
-        <div className="mx-auto max-w-2xl text-center">
+        <div className="pricing-header mx-auto max-w-2xl text-center">
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#B80D14]">
             TARIFAS TRANSPARENTES
           </p>
@@ -133,7 +204,7 @@ export default function PricingBlock() {
           </p>
         </div>
 
-        <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-3 items-stretch">
+        <div className="pricing-grid mt-14 grid grid-cols-1 gap-8 md:grid-cols-3 items-stretch">
           {tiers.map((tier) => {
             const price = tier.monthly;
             const waUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
@@ -141,17 +212,17 @@ export default function PricingBlock() {
             )}`;
 
             return (
-              <Card
-                key={tier.name}
-                className={cn(
-                  "relative flex flex-col justify-between transition-all duration-200 hover:shadow-lg",
-                  tier.featured
-                    ? "border-2 border-[#B80D14] shadow-xl shadow-[#B80D14]/10"
-                    : "border border-slate-200/90 shadow-sm",
-                )}
-              >
-                {tier.featured && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
+              <div key={tier.name} className="pricing-card flex">
+                <Card
+                  className={cn(
+                    "relative flex w-full flex-col justify-between transition-shadow duration-200 hover:shadow-lg",
+                    tier.featured
+                      ? "border-2 border-[#B80D14] shadow-xl shadow-[#B80D14]/10"
+                      : "border border-slate-200/90 shadow-sm",
+                  )}
+                >
+                  {tier.featured && (
+                    <div className="popular-badge absolute -top-3.5 left-1/2 -translate-x-1/2">
                     <Badge className="bg-[#B80D14] px-4 py-1 text-[11px] font-extrabold uppercase tracking-wider text-white shadow-sm hover:bg-[#B80D14]">
                       MÁS POPULAR
                     </Badge>
@@ -221,24 +292,25 @@ export default function PricingBlock() {
                   </ul>
                 </CardContent>
 
-                <CardFooter className="pt-4">
-                  <Button
-                    nativeButton={false}
-                    variant={tier.featured ? "default" : "outline"}
-                    size="lg"
-                    className="w-full"
-                    render={
-                      <a
-                        href={waUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      />
-                    }
-                  >
-                    {tier.cta}
-                  </Button>
-                </CardFooter>
-              </Card>
+                  <CardFooter className="pt-4">
+                    <Button
+                      nativeButton={false}
+                      variant={tier.featured ? "default" : "outline"}
+                      size="lg"
+                      className="w-full"
+                      render={
+                        <a
+                          href={waUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        />
+                      }
+                    >
+                      {tier.cta}
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
             );
           })}
         </div>
