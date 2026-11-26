@@ -1,0 +1,46 @@
+---
+import { pricingPlans } from '../../data/siteData';
+import SectionHeader from '../ui/SectionHeader.astro';
+import Card from '../ui/Card.astro';
+import Button from '../ui/Button.astro';
+---
+
+<section id="tarifas" class="py-20 border-t border-slate-900">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <SectionHeader
+      badge="Tarifas Transparentes"
+      title="Planes flexibles para cada necesidad"
+      subtitle="Elige la modalidad que mejor se adapte a tu frecuencia de uso."
+    />
+
+    <div class="grid gap-8 md:grid-cols-3">
+      {pricingPlans.map((plan) => (
+        <Card class={plan.highlighted ? 'border-amber-400/60 ring-1 ring-amber-400/30' : ''}>
+          <h3 class="text-xl font-bold text-white">{plan.name}</h3>
+          <div class="mt-4 flex items-baseline gap-2">
+            <span class="text-3xl font-extrabold text-amber-400">{plan.price}</span>
+            <span class="text-xs text-slate-400">/ {plan.period}</span>
+          </div>
+          <p class="mt-3 text-sm text-slate-400">{plan.description}</p>
+          <ul class="mt-6 space-y-2 text-sm text-slate-300">
+            {plan.features.map((item) => (
+              <li class="flex items-center gap-2">
+                <span class="text-amber-400">✓</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+          <div class="mt-8">
+            <Button
+              href="#contacto"
+              variant={plan.highlighted ? 'primary' : 'outline'}
+              class="w-full"
+            >
+              Solicitar Plan
+            </Button>
+          </div>
+        </Card>
+      ))}
+    </div>
+  </div>
+</section>

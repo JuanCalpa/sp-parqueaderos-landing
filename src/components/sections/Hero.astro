@@ -1,0 +1,23 @@
+---
+import { siteConfig } from '../../data/siteData';
+import Badge from '../ui/Badge.astro';
+import Button from '../ui/Button.astro';
+---
+
+<section id="inicio" class="relative overflow-hidden py-20 sm:py-28">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+    <div class="mb-6">
+      <Badge text="Seguridad, Tecnología y Confianza 24/7" />
+    </div>
+    <h1 class="mx-auto max-w-4xl text-4xl font-extrabold tracking-tight text-white sm:text-6xl">
+      Tu vehículo seguro en manos de <span class="text-amber-400">{siteConfig.name}</span>
+    </h1>
+    <p class="mx-auto mt-6 max-w-2xl text-lg text-slate-400">
+      {siteConfig.description}
+    </p>
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+      <Button href="#tarifas" variant="primary">Ver Planes y Tarifas</Button>
+      <Button href="#servicios" variant="outline">Conocer Servicios</Button>
+    </div>
+  </div>
+</section>
